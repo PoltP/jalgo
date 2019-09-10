@@ -11,10 +11,10 @@ public abstract class BaseSortTest {
         return new Integer[] { 30, -70, 90, 10, -5, 80, 60, -100, 60 };
     }
     private Integer[] getAscendingIntegerArray() {
-        return new Integer[] { -100, -5, 10, 30, 60, 60, -70, 80, 90 };
+        return new Integer[] { -100, -70, -5, 10, 30, 60, 60, 80, 90 };
     }
     private Integer[] getDescendingIntegerArray() {
-        return new Integer[] { 90, 80, -70, 60, 60, 30, 10, -5, -100 };
+        return new Integer[] { 90, 80, 60, 60, 30, 10, -5, -70, -100 };
     }
 
     @Test
