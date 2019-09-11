@@ -1,9 +1,10 @@
 package com.jalgo.strings;
 
+import com.jalgo.common.ISearchable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringSearchKMP {
+public class StringSearchKMP implements ISearchable {
     public List<Integer> search(String input, String pattern) {
         int[] lps = prepareLPS(pattern);
         ArrayList<Integer> result = new ArrayList<Integer>();
