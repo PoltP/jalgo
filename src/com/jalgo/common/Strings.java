@@ -1,5 +1,7 @@
 package com.jalgo.common;
 
+import java.math.BigInteger;
+import java.util.Random;
 import java.util.function.IntFunction;
 
 public final class Strings {
@@ -23,5 +25,18 @@ public final class Strings {
         }
 
         return z;
+    }
+
+    public static long createHash(String str) {
+        return createHash(str, 0, str.length());
+    }
+    public static long createHash(String str, int start, int length) {
+        long prime = BigInteger.probablePrime(31, new Random()).longValue();// (1<<9 + 7), (1<<9 + 9) etc.
+        long radix = 97;// can be not a prime number
+        long hash = 0;
+        for (int i = start; i < start + length; i++) {
+            hash = (hash * radix + str.charAt(i)) % prime;
+        }
+        return hash;
     }
 }
