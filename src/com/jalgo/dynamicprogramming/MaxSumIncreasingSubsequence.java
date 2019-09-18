@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class LongestIncreasingSubsequence {
+public class MaxSumIncreasingSubsequence {
     public static int[] dpTabulation(int input[]) {
         int maxIndex = 0;
-        int memo[] = new int[input.length];
-        Arrays.fill(memo, 1);
+        int memo[] = Arrays.copyOf(input, input.length);
         for (int i = 1; i < memo.length; i++) {
             for (int j = 0; j < i; j++) {
                 if (input[i] > input[j]) {
-                    memo[i] = Math.max(memo[i], memo[j] + 1);
+                    memo[i] = Math.max(memo[i], memo[j] + input[i]);
                     if (memo[maxIndex] < memo[i]) {
                         maxIndex = i;
                     }
@@ -24,7 +23,7 @@ public class LongestIncreasingSubsequence {
         for (int i = maxIndex, itemIndex = memo[maxIndex]; i >= 0; i--) {
             if (memo[i] == itemIndex) {
                 sequence.add(input[i]);
-                itemIndex--;
+                itemIndex -= input[i];
             }
         }
         Collections.reverse(sequence);
