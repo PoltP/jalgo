@@ -32,7 +32,7 @@ public class GraphTest {
     }
 
     @Test
-    public void dijksra() {
+    public void dijkstra() {
         Graph graph = constructTestGraph();
         assertArrayEquals(new Integer[]{1, 3, 4, 5}, Graph.dijkstraSearch(graph, 1, 5).toArray());
         assertArrayEquals(new Integer[]{1, 3, 6}, Graph.dijkstraSearch(graph, 1, 6).toArray());
