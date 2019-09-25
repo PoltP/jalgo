@@ -8,8 +8,7 @@ public class CoinChangeMin {
         int[] dpTab = new int[n + 1];
         Arrays.fill(dpTab, Integer.MAX_VALUE);
         dpTab[0] = 0;
-        for (int i = 0; i < coins.length; i++) {
-            int coin = coins[i];
+        for (int coin: coins) {
             for (int j = coin; j <= n; j++) {
                 if(dpTab[j - coin] + 1 < dpTab[j]) {
                     dpTab[j] = dpTab[j - coin] + 1;
