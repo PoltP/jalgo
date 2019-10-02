@@ -2,8 +2,8 @@ package com.jalgo.common;
 
 import java.util.Comparator;
 
-public final class QuickSelect {
-    public static <T> int partitionLomuto(T[] a, Comparator<T> c, int low, int high) {
+public final class Partition {
+    public static <T> int lomuto(T[] a, Comparator<T> c, int low, int high) {
         T pivot = a[high];
         int i = low;
         for(int j = low; j < high; j++) {
@@ -15,7 +15,7 @@ public final class QuickSelect {
         Utils.swap(a, i, high);
         return i;
     }
-    public static <T> int partitionHoare(T[] a, Comparator<T> c, int low, int high) {
+    public static <T> int hoare(T[] a, Comparator<T> c, int low, int high) {
         T pivot = a[low + (high - low) / 2];
         int i = low - 1, j = high + 1;
         while(true) {

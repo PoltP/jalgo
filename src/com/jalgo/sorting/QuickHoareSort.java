@@ -1,7 +1,7 @@
 package com.jalgo.sorting;
 
 import com.jalgo.common.ISortable;
-import com.jalgo.common.QuickSelect;
+import com.jalgo.common.Partition;
 
 import java.util.Comparator;
 
@@ -12,7 +12,7 @@ public class QuickHoareSort<T> implements ISortable<T> {
 
     private static <T> void quickSort(T[] a, Comparator<T> c, int low, int high) {
        if(low >= high) return;
-       int pivot = QuickSelect.partitionHoare(a, c, low, high);
+       int pivot = Partition.hoare(a, c, low, high);
        quickSort(a, c, low, pivot);
        quickSort(a, c, pivot + 1, high);
     }
