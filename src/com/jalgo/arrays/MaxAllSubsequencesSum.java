@@ -5,15 +5,12 @@ import java.util.Arrays;
 public class MaxAllSubsequencesSum {
     public static long sum(long[] arr) {
         long[] seqSums = new long[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            if (i == 0) {
-                seqSums[i] = arr[i];
+        seqSums[0] = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (seqSums[i - 1] < 0 || arr[i] < 0) {
+                seqSums[i] = Math.max(seqSums[i - 1], arr[i]);
             } else {
-                if (seqSums[i - 1] < 0 || arr[i] < 0) {
-                    seqSums[i] = Math.max(seqSums[i - 1], arr[i]);
-                } else {
-                    seqSums[i] = Math.max(seqSums[i - 1], arr[i] + seqSums[i - 1]);
-                }
+                seqSums[i] = Math.max(seqSums[i - 1], arr[i] + seqSums[i - 1]);
             }
         }
         return seqSums[seqSums.length - 1];
