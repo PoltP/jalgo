@@ -7,10 +7,11 @@ public class MaxAllSubsequencesSum {
         long[] seqSums = new long[arr.length];
         seqSums[0] = arr[0];
         for (int i = 1; i < arr.length; i++) {
-            if (seqSums[i - 1] < 0 || arr[i] < 0) {
-                seqSums[i] = Math.max(seqSums[i - 1], arr[i]);
+            long prev = seqSums[i - 1];
+            if (prev < 0 || arr[i] < 0) {
+                seqSums[i] = Math.max(prev, arr[i]);
             } else {
-                seqSums[i] = Math.max(seqSums[i - 1], arr[i] + seqSums[i - 1]);
+                seqSums[i] = Math.max(prev, arr[i] + prev);
             }
         }
         return seqSums[seqSums.length - 1];
