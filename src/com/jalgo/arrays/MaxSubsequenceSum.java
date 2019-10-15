@@ -2,7 +2,7 @@ package com.jalgo.arrays;
 
 import java.util.Arrays;
 
-public class MaxAllSubsequencesSum {
+public class MaxSubsequenceSum {
     public static long sum(long[] arr) {
         long[] seqSums = new long[arr.length];
         seqSums[0] = arr[0];

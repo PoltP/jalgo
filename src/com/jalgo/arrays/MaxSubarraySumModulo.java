@@ -2,7 +2,7 @@ package com.jalgo.arrays;
 
 import java.util.TreeSet;
 
-public class MaxAllSubarraysSumModulo {
+public class MaxSubarraySumModulo {
     //
     // sum(j+1, i) = (arr[j+1] + arr[j+2] + ... + arr[i]) % m, j <= i
     // prefix_i    = (arr[0]   + arr[1]   + ... + arr[j] + arr[j+1] + ... + arr[i]) % m
