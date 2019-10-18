@@ -65,21 +65,17 @@ public class Turnstile {
                 previousTurnType = TurnType.NONE;
                 timer = Math.min(nextEnter.time, nextExit.time);
             }
-            if (timer > nextExit.time && timer < nextEnter.time) {
-                turnProc.turn(queueExit, TurnType.EXIT);
-            } else if (timer > nextEnter.time && timer < nextExit.time) {
-                turnProc.turn(queueEnter, TurnType.ENTER);
-            } else if (nextEnter.time == nextExit.time || (timer > nextEnter.time && timer == nextExit.time) || (timer > nextExit.time && timer == nextEnter.time)) {
+            if (nextEnter.time == nextExit.time || (timer > nextEnter.time && timer == nextExit.time) || (timer > nextExit.time && timer == nextEnter.time)) {
                 // 2 persons at the same time or one is waiting their queue
                 if (previousTurnType == TurnType.NONE || previousTurnType == TurnType.EXIT) {
                     turnProc.turn(queueExit, TurnType.EXIT);
                 } else {
                     turnProc.turn(queueEnter, TurnType.ENTER);
                 }
-            } else if (nextEnter.time == timer) {
-                turnProc.turn(queueEnter, TurnType.ENTER);
-            } else if (nextExit.time == timer) {
+            } else if (timer > nextExit.time && timer < nextEnter.time || nextExit.time == timer) {
                 turnProc.turn(queueExit, TurnType.EXIT);
+            } else if (timer > nextEnter.time && timer < nextExit.time || nextEnter.time == timer) {
+                turnProc.turn(queueEnter, TurnType.ENTER);
             }
         }
 
