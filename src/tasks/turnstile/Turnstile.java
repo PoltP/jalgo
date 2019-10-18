@@ -40,12 +40,11 @@ public class Turnstile {
             }
         }
 
-        Person nextEnter, nextExit;
         TurnProc turnProc = (Queue<Person> queue, TurnType turnType) -> {
             Person person = queue.poll();
             result.put(person.index, timer);
-            timer++;
             previousTurnType = turnType;
+            timer++;
         };
         while (!queueEnter.isEmpty() || !queueExit.isEmpty()) {
             if (queueEnter.isEmpty()) {
@@ -59,14 +58,16 @@ public class Turnstile {
                 continue;
             }
 
-            nextEnter = queueEnter.peek();
-            nextExit = queueExit.peek();
+            Person nextEnter = queueEnter.peek();
+            Person nextExit = queueExit.peek();
             if (timer < Math.min(nextEnter.time, nextExit.time)) {// ensure it
                 previousTurnType = TurnType.NONE;
                 timer = Math.min(nextEnter.time, nextExit.time);
             }
-            if (nextEnter.time == nextExit.time || (timer > nextEnter.time && timer == nextExit.time) || (timer > nextExit.time && timer == nextEnter.time)) {
-                // 2 persons at the same time or one is waiting their queue
+            if (nextEnter.time == nextExit.time ||
+                    (timer > nextEnter.time && timer == nextExit.time) ||
+                    (timer > nextExit.time && timer == nextEnter.time)) {
+                // Collision case: 2 persons at the same time or one is waiting a permission to go
                 if (previousTurnType == TurnType.NONE || previousTurnType == TurnType.EXIT) {
                     turnProc.turn(queueExit, TurnType.EXIT);
                 } else {
@@ -79,6 +80,6 @@ public class Turnstile {
             }
         }
 
-        return new ArrayList<Integer>(result.values());// HashMap keys are sorted out of the box
+        return new ArrayList<>(result.values());// HashMap keys are sorted out of the box
     }
 }
