@@ -24,78 +24,76 @@ public class Heap {
         this.comparator = comparator;
     }
 
-    public int getParentIndex(int childIndex) {
+    public int parentIndex(int childIndex) {
         return (childIndex - 1) / 2;
     }
 
-    public int getLeftChildIndex(int parentIndex) {
+    public int leftChildIndex(int parentIndex) {
         return 2 * parentIndex + 1;
     }
 
-    public int getRightChildIndex(int parentIndex) {
+    public int rightChildIndex(int parentIndex) {
         return 2 * parentIndex + 2;
     }
 
     public boolean hasParent(int childIndex) {
-        return this.getParentIndex(childIndex) < size;
+        return parentIndex(childIndex) < size;
     }
 
     public boolean hasLeftChild(int parentIndex) {
-        return this.getLeftChildIndex(parentIndex) < size;
+        return leftChildIndex(parentIndex) < size;
     }
 
     public boolean hasRightChild(int parentIndex) {
-        return this.getRightChildIndex(parentIndex) < size;
+        return rightChildIndex(parentIndex) < size;
     }
 
-    public int getParent(int childIndex) {
-        return this.items[getParentIndex(childIndex)];
+    public int parent(int childIndex) {
+        return items[parentIndex(childIndex)];
     }
 
-    public int getLeftChild(int parentIndex) {
-        return this.items[this.getLeftChildIndex(parentIndex)];
+    public int leftChild(int parentIndex) {
+        return items[leftChildIndex(parentIndex)];
     }
 
-    public int getRightChild(int parentIndex) {
-        return this.items[this.getRightChildIndex(parentIndex)];
+    public int rightChild(int parentIndex) {
+        return items[rightChildIndex(parentIndex)];
     }
 
     public int peek() {
-        if (this.size == 0)
+        if (size == 0)
             throw new IllegalStateException("size == 0");
-        return this.items[0];
+        return items[0];
     }
 
     public int poll() {
-        int item = this.peek();
-        this.items[0] = this.items[this.size - 1];
-        this.size--;
-        this.heapifyDown();
+        int item = peek();
+        items[0] = items[size - 1];
+        size--;
+        heapifyDown();
         return item;
     }
 
     public void add(int item) {
-        this.ensureCapacity();
-        this.items[this.size] = item;
-        this.size++;
-        this.heapifyUp();
+        ensureCapacity();
+        items[size] = item;
+        size++;
+        heapifyUp();
     }
 
     private void ensureCapacity() {
-        if (this.size == this.capacity) {
+        if (size == capacity) {
             capacity *= 2;
-            this.items = Arrays.copyOf(this.items, capacity);
+            items = Arrays.copyOf(items, capacity);
         }
     }
 
     private void heapifyDown() {
         int index = 0;
-        while (this.hasLeftChild(index)) {// no right child also
-            int smallerChildIndex = this.getLeftChildIndex(index);
-            if (this.hasLeftChild(index) && this.comparator.compare(this.getRightChild(index), this.getLeftChild(index)) > 0) {
-                smallerChildIndex = this.getRightChildIndex(index);
-            }
-            if (this.comparator.compare(this.items[index], this.items[smallerChildIndex]) > 0) {
+        while (hasLeftChild(index)) {// no right child also
+            int smallerChildIndex = hasRightChild(index) && compare(rightChild(index), leftChild(index)) ?
+                rightChildIndex(index) : leftChildIndex(index);
+            if (compare(items[index], items[smallerChildIndex])) {
                 break;
             } else {
                 swap(index, smallerChildIndex);
@@ -105,16 +103,21 @@ public class Heap {
     }
 
     private void heapifyUp() {
-        int index = this.size - 1;
-        while (this.hasParent(index) && this.comparator.compare(this.getParent(index), this.items[index]) > 0) {
-            swap(this.getParentIndex(index), index);
-            index = this.getParentIndex(index);
+        int index = size - 1;
+        while (hasParent(index) && compare(parent(index), items[index])) {
+            int newIndex = parentIndex(index);
+            swap(newIndex, index);
+            index = newIndex;
         }
     }
 
     private void swap(int index1, int index2) {
-        Integer tmp = this.items[index2];
-        this.items[index2] = this.items[index1];
-        this.items[index1] = tmp;
+        Integer tmp = items[index2];
+        items[index2] = items[index1];
+        items[index1] = tmp;
+    }
+
+    private boolean compare(int left, int right) {
+        return comparator.compare(left, right) > 0;
     }
 }
